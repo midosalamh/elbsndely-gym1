@@ -57,16 +57,8 @@ const theme = createTheme({
         size: 'small',
       },
     },
-    MuiDataGrid: {
-      styleOverrides: {
-        root: {
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: '#f5f5f5',
-            fontWeight: 600,
-          },
-        },
-      },
-    },
+    // تم حذف MuiDataGrid من هنا لأنه ليس جزء من Material-UI الأساسي
+    // سيتم تطبيق الأنماط عبر CSS في index.css
   },
 });
 
