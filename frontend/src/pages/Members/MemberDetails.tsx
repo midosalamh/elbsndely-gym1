@@ -16,7 +16,6 @@ import {
   ListItemText,
   ListItemIcon,
   IconButton,
-  Tooltip,
 } from '@mui/material';
 import {
   ArrowBack,
@@ -25,9 +24,6 @@ import {
   Email,
   CalendarToday,
   Person,
-  LocationOn,
-  Emergency,
-  MedicalServices,
   CardMembership,
   Payment,
 } from '@mui/icons-material';
