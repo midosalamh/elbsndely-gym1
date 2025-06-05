@@ -29,12 +29,23 @@ const initialState: AuthState = {
   isAuthenticated: !!localStorage.getItem('token'),
 };
 
+// Define API response types
+interface LoginResponse {
+  user: User;
+  token: string;
+}
+
+interface ApiResponse<T> {
+  data: T;
+  message?: string;
+}
+
 // Async thunks
-export const login = createAsyncThunk(
+export const login = createAsyncThunk<LoginResponse, { login: string; password: string }>(
   'auth/login',
-  async (credentials: { login: string; password: string }, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
     try {
-      const response = await authAPI.login(credentials);
+      const response: ApiResponse<LoginResponse> = await authAPI.login(credentials);
       localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error: any) {
@@ -43,18 +54,18 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
+export const register = createAsyncThunk<LoginResponse, {
+  username: string;
+  email: string;
+  password: string;
+  full_name: string;
+  phone?: string;
+  role?: string;
+}>(
   'auth/register',
-  async (userData: {
-    username: string;
-    email: string;
-    password: string;
-    full_name: string;
-    phone?: string;
-    role?: string;
-  }, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const response = await authAPI.register(userData);
+      const response: ApiResponse<LoginResponse> = await authAPI.register(userData);
       localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error: any) {
@@ -63,11 +74,11 @@ export const register = createAsyncThunk(
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
+export const getCurrentUser = createAsyncThunk<{ user: User }, void>(
   'auth/getCurrentUser',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await authAPI.getCurrentUser();
+      const response: ApiResponse<{ user: User }> = await authAPI.getCurrentUser();
       return response.data;
     } catch (error: any) {
       localStorage.removeItem('token');
@@ -76,15 +87,15 @@ export const getCurrentUser = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk(
+export const updateProfile = createAsyncThunk<{ user: User }, {
+  full_name?: string;
+  email?: string;
+  phone?: string;
+}>(
   'auth/updateProfile',
-  async (userData: {
-    full_name?: string;
-    email?: string;
-    phone?: string;
-  }, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const response = await authAPI.updateProfile(userData);
+      const response: ApiResponse<{ user: User }> = await authAPI.updateProfile(userData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'خطأ في تحديث الملف الشخصي');
@@ -92,14 +103,14 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-export const changePassword = createAsyncThunk(
+export const changePassword = createAsyncThunk<{ message: string }, {
+  current_password: string;
+  new_password: string;
+}>(
   'auth/changePassword',
-  async (passwordData: {
-    current_password: string;
-    new_password: string;
-  }, { rejectWithValue }) => {
+  async (passwordData, { rejectWithValue }) => {
     try {
-      const response = await authAPI.changePassword(passwordData);
+      const response: ApiResponse<{ message: string }> = await authAPI.changePassword(passwordData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'خطأ في تغيير كلمة المرور');
