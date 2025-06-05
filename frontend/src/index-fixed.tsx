@@ -12,7 +12,7 @@ import App from './App';
 import { store } from './store/store';
 import './index.css';
 
-// PRODUCTION-READY THEME - NETLIFY COMPATIBLE
+// Create RTL theme for Arabic - NETLIFY COMPATIBLE VERSION
 const theme = createTheme({
   direction: 'rtl',
   typography: {
@@ -53,20 +53,16 @@ const theme = createTheme({
     },
     MuiTextField: {
       defaultProps: {
-        variant: 'outlined' as const,
-        size: 'small' as const,
+        variant: 'outlined',
+        size: 'small',
       },
     },
   },
 });
 
-// SAFE ROOT ELEMENT CREATION WITH NULL CHECK
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error('Root element not found. Make sure you have a div with id="root" in your index.html');
-}
-
-const root = ReactDOM.createRoot(rootElement);
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 
 root.render(
   <React.StrictMode>
