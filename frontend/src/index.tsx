@@ -12,7 +12,7 @@ import App from './App';
 import { store } from './store/store';
 import './index.css';
 
-// Create RTL theme for Arabic
+// NETLIFY COMPATIBLE VERSION - NO MuiDataGrid
 const theme = createTheme({
   direction: 'rtl',
   typography: {
@@ -57,8 +57,6 @@ const theme = createTheme({
         size: 'small',
       },
     },
-    // تم حذف MuiDataGrid من هنا لأنه ليس جزء من Material-UI الأساسي
-    // سيتم تطبيق الأنماط عبر CSS في index.css
   },
 });
 
