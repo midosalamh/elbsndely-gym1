@@ -45,7 +45,7 @@ export const login = createAsyncThunk<LoginResponse, { login: string; password: 
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<LoginResponse> = await authAPI.login(credentials);
+      const response = await authAPI.login(credentials);
       localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error: any) {
@@ -65,7 +65,7 @@ export const register = createAsyncThunk<LoginResponse, {
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<LoginResponse> = await authAPI.register(userData);
+      const response = await authAPI.register(userData);
       localStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error: any) {
@@ -78,7 +78,7 @@ export const getCurrentUser = createAsyncThunk<{ user: User }, void>(
   'auth/getCurrentUser',
   async (_, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<{ user: User }> = await authAPI.getCurrentUser();
+      const response = await authAPI.getCurrentUser();
       return response.data;
     } catch (error: any) {
       localStorage.removeItem('token');
@@ -95,7 +95,7 @@ export const updateProfile = createAsyncThunk<{ user: User }, {
   'auth/updateProfile',
   async (userData, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<{ user: User }> = await authAPI.updateProfile(userData);
+      const response = await authAPI.updateProfile(userData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'خطأ في تحديث الملف الشخصي');
@@ -110,7 +110,7 @@ export const changePassword = createAsyncThunk<{ message: string }, {
   'auth/changePassword',
   async (passwordData, { rejectWithValue }) => {
     try {
-      const response: ApiResponse<{ message: string }> = await authAPI.changePassword(passwordData);
+      const response = await authAPI.changePassword(passwordData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'خطأ في تغيير كلمة المرور');
