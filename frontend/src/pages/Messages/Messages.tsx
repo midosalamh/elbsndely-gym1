@@ -320,7 +320,7 @@ const Messages: React.FC = () => {
               <Tab icon={<Person />} label="رسالة فردية" />
               <Tab icon={<Group />} label="رسالة جماعية" />
               <Tab icon={<Schedule />} label="جدولة الرسائل" />
-              <Tab icon={<Template />} label="القوالب" />
+              <Tab icon={<Description />} label="القوالب" />
               <Tab icon={<History />} label="سجل الرسائل" />
             </Tabs>
           </Box>
@@ -362,7 +362,7 @@ const Messages: React.FC = () => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Button
                         variant="outlined"
-                        startIcon={<Template />}
+                        startIcon={<Description />}
                         onClick={() => setTemplateDialog(true)}
                       >
                         استخدام قالب
@@ -480,7 +480,7 @@ const Messages: React.FC = () => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Button
                         variant="outlined"
-                        startIcon={<Template />}
+                        startIcon={<Description />}
                         onClick={() => setTemplateDialog(true)}
                       >
                         استخدام قالب
@@ -608,7 +608,7 @@ const Messages: React.FC = () => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Button
                         variant="outlined"
-                        startIcon={<Template />}
+                        startIcon={<Description />}
                         onClick={() => setTemplateDialog(true)}
                       >
                         استخدام قالب
