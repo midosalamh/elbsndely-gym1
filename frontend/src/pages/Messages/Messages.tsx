@@ -40,7 +40,7 @@ import {
   Schedule,
   Group,
   Person,
-  Template,
+  Description,
   History,
   Refresh,
   Download,
@@ -679,7 +679,7 @@ const Messages: React.FC = () => {
 
                   <Button
                     variant="contained"
-                    startIcon={<Template />}
+                    startIcon={<Description />}
                     fullWidth
                     sx={{ mt: 2 }}
                   >
