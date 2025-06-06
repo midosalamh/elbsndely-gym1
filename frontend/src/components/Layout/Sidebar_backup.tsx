@@ -13,9 +13,6 @@ import {
   Divider,
   Avatar,
   Chip,
-  Link,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import {
   Dashboard,
@@ -29,48 +26,84 @@ import {
   Home,
   ArrowBack,
   WhatsApp,
-  Phone,
-  Code,
+  Notifications,
 } from '@mui/icons-material';
- 
-import { RootState } from '../../store/store'; 
- 
-interface SidebarProps { 
-  onItemClick?: () => void; 
-} 
- 
-const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => { 
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
-  const { user } = useSelector((state: RootState) => state.auth); 
-  const theme = useTheme(); 
-  const isMobile = useMediaQuery(theme.breakpoints.down('md')); 
- 
-  const menuItems = [ 
-    { text: '???? ??????', icon: <Dashboard />, path: '/dashboard', roles: ['admin', 'manager', 'receptionist'] }, 
-    { text: '???????', icon: <People />, path: '/members', roles: ['admin', 'manager', 'receptionist'] }, 
-    { text: '??????????', icon: <CardMembership />, path: '/subscriptions', roles: ['admin', 'manager', 'receptionist'] }, 
-    { text: '?????????', icon: <Payment />, path: '/payments', roles: ['admin', 'manager', 'receptionist'] }, 
-    { text: '????????', icon: <Assessment />, path: '/reports', roles: ['admin', 'manager'] }, 
-    { text: '???????', icon: <Message />, path: '/messages', roles: ['admin', 'manager'] }, 
-    { text: '?????????', icon: <Settings />, path: '/settings', roles: ['admin', 'manager'] }, 
-  ]; 
- 
-  const handleItemClick = (path: string) => { 
-    navigate(path); 
-    onItemClick?.(); 
-  }; 
- 
-  const isItemActive = (path: string) => { 
-    return location.pathname === path || location.pathname.startsWith(path + '/'); 
-  }; 
- 
-  const canAccessItem = (roles: string[]) => { 
-    return roles.includes(user?.role || ''); 
-  }; 
- 
+
+import { RootState } from '../../store/store';
+
+interface SidebarProps {
+  onItemClick?: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const menuItems = [
+    {
+      text: 'لوحة التحكم',
+      icon: <Dashboard />,
+      path: '/dashboard',
+      roles: ['admin', 'manager', 'receptionist'],
+    },
+    {
+      text: 'الأعضاء',
+      icon: <People />,
+      path: '/members',
+      roles: ['admin', 'manager', 'receptionist'],
+    },
+    {
+      text: 'الاشتراكات',
+      icon: <CardMembership />,
+      path: '/subscriptions',
+      roles: ['admin', 'manager', 'receptionist'],
+    },
+    {
+      text: 'المدفوعات',
+      icon: <Payment />,
+      path: '/payments',
+      roles: ['admin', 'manager', 'receptionist'],
+    },
+    {
+      text: 'التقارير',
+      icon: <Assessment />,
+      path: '/reports',
+      roles: ['admin', 'manager'],
+    },
+    {
+      text: 'الرسائل',
+      icon: <Message />,
+      path: '/messages',
+      roles: ['admin', 'manager'],
+    },
+    {
+      text: 'الإعدادات',
+      icon: <Settings />,
+      path: '/settings',
+      roles: ['admin', 'manager'],
+    },
+  ];
+
+  const handleItemClick = (path: string) => {
+    navigate(path);
+    onItemClick?.();
+  };
+
+  const isItemActive = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
+
+  const canAccessItem = (roles: string[]) => {
+    return roles.includes(user?.role || '');
+  };
+
   const getRoleColor = (role: string) => {
-    const colors = { admin: 'error', manager: 'warning', receptionist: 'info' };
+    const colors = {
+      admin: 'error',
+      manager: 'warning',
+      receptionist: 'info',
+    };
     return colors[role as keyof typeof colors] || 'default';
   };
 
@@ -84,39 +117,48 @@ const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
-      <Toolbar sx={{ px: 2, py: 1 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
-          <Avatar sx={{ bgcolor: 'primary.main', width: isMobile ? 32 : 40, height: isMobile ? 32 : 40 }}>
-            <FitnessCenter />
-          </Avatar>
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant={isMobile ? 'body2' : 'h6'} sx={{ fontWeight: 'bold', color: 'primary.main', lineHeight: 1.2 }}>
-              البسنديلي جيم
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', lineHeight: 1 }}>
-              نظام إدارة الصالة
-            </Typography>
-          </Box>
-        </Box>
+      <Toolbar
+        sx={{
+          background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+          color: 'white',
+          flexDirection: 'column',
+          alignItems: 'center',
+          py: 2,
+        }}
+      >
+        <FitnessCenter sx={{ fontSize: 40, mb: 1 }} />
+        <Typography variant="h6" sx={{ fontWeight: 600, textAlign: 'center' }}>
+          البسنديلي جيم
+        </Typography>
+        <Typography variant="caption" sx={{ opacity: 0.8, textAlign: 'center' }}>
+          نظام إدارة الصالة
+        </Typography>
       </Toolbar>
 
-      {/* User Info */}
-      <Box sx={{ px: 2, py: 1, bgcolor: 'grey.50' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-            {user?.full_name?.charAt(0) || 'U'}
+      {/* User info */}
+      <Box sx={{ p: 2, bgcolor: 'grey.50' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Avatar
+            sx={{ width: 48, height: 48, bgcolor: 'primary.main' }}
+            src={user?.avatar}
+          >
+            {user?.full_name?.charAt(0)}
           </Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" sx={{ fontWeight: 'medium', lineHeight: 1.2 }}>
-              {user?.full_name || 'مستخدم'}
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: 600, mb: 0.5 }}
+              noWrap
+            >
+              {user?.full_name}
             </Typography>
             <Chip
               label={getRoleDisplayName(user?.role || '')}
               size="small"
               color={getRoleColor(user?.role || '') as any}
-              sx={{ height: 16, fontSize: '0.7rem' }}
+              variant="outlined"
             />
           </Box>
         </Box>
@@ -175,7 +217,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
       <Box sx={{ flex: 1, overflow: 'auto' }}>
         <List sx={{ py: 1 }}>
           {menuItems.map((item) => {
-            if (!canAccessItem(item.roles)) return null;
+            if (!canAccessItem(item.roles)) {
+              return null;
+            }
 
             const isActive = isItemActive(item.path);
 
@@ -184,29 +228,26 @@ const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
                 <ListItemButton
                   onClick={() => handleItemClick(item.path)}
                   sx={{
-                    borderRadius: 1,
+                    borderRadius: 2,
+                    mx: 1,
                     mb: 0.5,
                     bgcolor: isActive ? 'primary.main' : 'transparent',
-                    color: isActive ? 'primary.contrastText' : 'text.primary',
+                    color: isActive ? 'white' : 'text.primary',
                     '&:hover': {
                       bgcolor: isActive ? 'primary.dark' : 'action.hover',
                     },
-                    transition: 'all 0.2s ease-in-out',
+                    '& .MuiListItemIcon-root': {
+                      color: isActive ? 'white' : 'text.secondary',
+                      minWidth: 40,
+                    },
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 40,
-                      color: isActive ? 'primary.contrastText' : 'text.secondary',
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText
                     primary={item.text}
                     primaryTypographyProps={{
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      fontSize: isMobile ? '0.875rem' : '1rem',
+                      fontSize: 14,
+                      fontWeight: isActive ? 600 : 500,
                     }}
                   />
                 </ListItemButton>
@@ -216,7 +257,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
         </List>
       </Box>
 
-      {/* WhatsApp Quick Action */}
+      {/* Quick Actions Footer */}
       <Box sx={{ p: 1, borderTop: 1, borderColor: 'divider' }}>
         <List dense>
           <ListItem disablePadding>
@@ -240,26 +281,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onItemClick }) => {
             </ListItemButton>
           </ListItem>
         </List>
-      </Box>
 
-      {/* Developer Info */}
-      <Box sx={{ p: 1, borderTop: 1, borderColor: 'divider', bgcolor: 'grey.50' }}>
-        <Divider sx={{ mb: 1 }} />
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5, mb: 0.5 }}>
-            <Code fontSize="small" />
-            تطوير: محمد سلامة
-          </Typography>
-          <Link href="tel:01063864546" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5, textDecoration: 'none' }}>
-            <Phone fontSize="small" />
-            <Typography variant="caption" color="primary">
-              01063864546
-            </Typography>
-          </Link>
-          <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-            © 2024 البسنديلي جيم
-          </Typography>
-        </Box>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ textAlign: 'center', display: 'block', mt: 1 }}
+        >
+          © 2024 البسنديلي جيم
+        </Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ textAlign: 'center', display: 'block' }}
+        >
+          الإصدار 1.0.0
+        </Typography>
       </Box>
     </Box>
   );

@@ -9,8 +9,9 @@ import {
   IconButton,
   useTheme,
   useMediaQuery,
+  Container,
 } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -91,14 +92,41 @@ const Layout: React.FC = () => {
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           minHeight: '100vh',
           backgroundColor: '#f5f5f5',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
         }}
       >
         {/* Toolbar spacer */}
         <Toolbar />
-        
+
         {/* Page content */}
-        <Box sx={{ p: 3 }}>
-          <Outlet />
+        <Box
+          sx={{
+            flex: 1,
+            p: { xs: 2, sm: 3 },
+            overflow: 'auto',
+            '&::-webkit-scrollbar': {
+              width: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: 'rgba(0,0,0,0.2)',
+              borderRadius: '4px',
+            },
+          }}
+        >
+          <Container
+            maxWidth={false}
+            sx={{
+              maxWidth: { xs: '100%', sm: '100%', md: '1400px' },
+              px: { xs: 0, sm: 1, md: 2 },
+            }}
+          >
+            <Outlet />
+          </Container>
         </Box>
       </Box>
     </Box>
